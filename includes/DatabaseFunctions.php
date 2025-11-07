@@ -5,6 +5,15 @@ function query($pdo, $sql, $parameters = []) {
     return $query;
 }
 
+function allJokes($pdo) {
+    $jokes = query($pdo, 'SELECT joke.id, joketext, name, email, categoryName
+                          FROM joke
+                          INNER JOIN author ON authorid = author.id
+                          INNER JOIN category ON categoryid = category.id');
+    return $jokes->fetchAll();
+}
+
+
 function totalJokes($pdo) {
     $query = query($pdo, 'SELECT COUNT(*) FROM joke');
     $row = $query->fetch();
